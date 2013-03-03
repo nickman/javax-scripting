@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/scripting~svn/!svn/ver/153/trunk/engines/java/src/com/sun/script/java
+END
+MemoryClassLoader.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/scripting~svn/!svn/ver/15/trunk/engines/java/src/com/sun/script/java/MemoryClassLoader.java
+END
+MemoryJavaFileManager.java
+K 25
+svn:wc:ra_dav:version-url
+V 101
+/svn/scripting~svn/!svn/ver/153/trunk/engines/java/src/com/sun/script/java/MemoryJavaFileManager.java
+END
+JavaCompiler.java
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/scripting~svn/!svn/ver/35/trunk/engines/java/src/com/sun/script/java/JavaCompiler.java
+END
+JavaScriptEngine.java
+K 25
+svn:wc:ra_dav:version-url
+V 96
+/svn/scripting~svn/!svn/ver/153/trunk/engines/java/src/com/sun/script/java/JavaScriptEngine.java
+END
+JavaScriptEngineFactory.java
+K 25
+svn:wc:ra_dav:version-url
+V 103
+/svn/scripting~svn/!svn/ver/153/trunk/engines/java/src/com/sun/script/java/JavaScriptEngineFactory.java
+END
