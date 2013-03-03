@@ -8,3 +8,4 @@ target
 *.bak
 *.class
 *.tmp
+*/.svn
