@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>scripting</artifactId>
+		<groupId>org.helios.scripting</groupId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+	
+	<groupId>org.helios.scripting</groupId>
+	<artifactId>engines</artifactId>
+	<packaging>jar</packaging>
+	<version>1.0-SNAPSHOT</version>
+	<name>JSR-233 Java Scripting Engines</name>
+	<build>
+	  <plugins>
+	    <!--
+	    ===========================================
+	    Javac Compiler Plugin
+	    ===========================================		 				 		
+	    -->
+	    <plugin>
+	      <groupId>org.apache.maven.plugins</groupId>
+	      <artifactId>maven-compiler-plugin</artifactId>
+	      <version>2.3.2</version>
+	      <configuration>
+		<source>1.6</source>
+		<target>1.6</target>
+	      </configuration>
+	    </plugin>
+	    <!--
+	    ===========================================
+	    Eclipse IDE Plugin
+	    ===========================================		 				 		
+	    -->			
+	    <plugin>
+	      <groupId>org.apache.maven.plugins</groupId>
+	      <artifactId>maven-eclipse-plugin</artifactId>
+	      <version>2.9</version>
+            </plugin>
+	    <!--
+	    ===========================================
+	    Source Attachment Plugin
+	    ===========================================		 				 		
+	    -->			
+           <plugin>
+	      <groupId>org.apache.maven.plugins</groupId>
+	      <artifactId>maven-source-plugin</artifactId>
+	      <version>2.2</version>
+	      <executions>
+		<execution>
+		  <id>attach-sources</id>
+		  <phase>verify</phase>
+		  <goals>
+		      <goal>jar</goal>
+		  </goals>
+		</execution>
+	      </executions>
+            </plugin>
+	    <!--
+	    ===========================================
+	    JavaDoc Attachment Plugin
+	    ===========================================		 				 		
+	    -->			
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <show>public</show>
+                    <nohelp>true</nohelp>
+                </configuration>
+	      </plugin>
+	  </plugins>
+	</build>
+	<dependencies>
+		<!-- ==========================================================			
+		  Logging Dependencies, put first so they sort high in cp
+		    ========================================================== -->
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+		</dependency>
+		
+		<!-- ==========================================================			
+		  Testing Dependencies
+		    ========================================================== -->
+		
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+		</dependency>
+
+		<!-- ==========================================================			
+		  Beanshell Dependencies
+		    ========================================================== -->			
+		<dependency>
+		  <groupId>org.beanshell</groupId>
+		  <artifactId>bsh</artifactId>
+		</dependency>
+		
+		
+	</dependencies>
+</project>

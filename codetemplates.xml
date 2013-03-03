@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><templates><template autoinsert="false" context="typecomment_context" deleted="false" description="Comment for created types" enabled="true" id="org.eclipse.jdt.ui.text.codetemplates.typecomment" name="typecomment">/**
+ * &lt;p&gt;Title: ${type_name}&lt;/p&gt;
+ * &lt;p&gt;Description: &lt;/p&gt; 
+ * &lt;p&gt;Project: &lt;a href="https://github.com/nickman/javax-scripting"&gt;JSR-233 Java Scripting&lt;/a&gt;&lt;/p&gt;
+ * &lt;p&gt;Packaged and maintained by Whitehead (nwhitehead AT heliosdev DOT org)&lt;/p&gt;
+ * &lt;p&gt;&lt;code&gt;${package_name}.${type_name}&lt;/code&gt;&lt;/p&gt;
+ */
+</template></templates>

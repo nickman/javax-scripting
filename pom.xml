@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.helios.scripting</groupId>
+	<artifactId>scripting</artifactId>
+	<packaging>pom</packaging>
+	<version>1.0-SNAPSHOT</version>
+	<name>JSR-233 Java Scripting Project</name>
+	<modules>
+		<module>engines</module>		
+	</modules>
+	<properties>
+		<log4j.version>1.2.16</log4j.version>
+		<junit.version>4.8.2</junit.version>
+		<beanshell.version>2.0b5</beanshell.version>
+		<webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	<dependencyManagement>
+		<dependencies>
+			<!-- ==========================================================			
+			  Logging Dependencies, put first so they sort high in cp
+			    ========================================================== -->
+			<dependency>
+				<groupId>log4j</groupId>
+				<artifactId>log4j</artifactId>
+				<version>${log4j.version}</version>
+			</dependency>
+			  
+			
+			<!-- ==========================================================			
+			  Testing Dependencies
+			    ========================================================== -->
+			
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>${junit.version}</version>
+				<scope>test</scope>
+			</dependency>
+
+			<!-- ==========================================================			
+			  Beanshell Dependencies
+			    ========================================================== -->			
+			<dependency>
+			  <groupId>org.beanshell</groupId>
+			  <artifactId>bsh</artifactId>
+			  <version>${beanshell.version}</version>
+			  <scope>provided</scope>
+			</dependency>
+
+
+			  
+			
+		</dependencies>
+	</dependencyManagement>
+</project>

@@ -1,0 +1,10 @@
+target
+.settings
+.classpath
+.project
+*.*~
+*/target/
+*.log
+*.bak
+*.class
+*.tmp
