@@ -110,9 +110,6 @@ public class BshScriptEngineTestCase {
 	
 }
 /*
-// set a variable
-engine.put( "foo", 42 );
-assertTrue( (Integer)engine.get("foo") == 42 );
 
 // bsh primitives stay primitive internally
 engine.eval( "int fooInt=42" );
