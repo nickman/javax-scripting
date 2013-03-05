@@ -107,7 +107,14 @@
 		  <groupId>org.beanshell</groupId>
 		  <artifactId>bsh</artifactId>
 		</dependency>
-		
+
+		<!-- ==========================================================			
+		  Jawk Dependencies
+		    ========================================================== -->			
+			<dependency>
+			  <groupId>org.jawk</groupId>
+			  <artifactId>jawk</artifactId>
+			</dependency>
 		
 	</dependencies>
 </project>
