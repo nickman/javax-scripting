@@ -13,7 +13,8 @@
 		<log4j.version>1.2.16</log4j.version>
 		<junit.version>4.8.2</junit.version>
 		<beanshell.version>2.0b5</beanshell.version>
-		<jawk.version>1_02</jawk.version>
+		<jawk.version>1.03-SNAPSHOT</jawk.version>
+		<bcel.version>5.1</bcel.version>
 		<webappDirectory>${project.build.directory}/${project.build.finalName}</webappDirectory>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -56,9 +57,16 @@
 			<dependency>
 			  <groupId>org.jawk</groupId>
 			  <artifactId>jawk</artifactId>
-			  <version>${jawk.version}</version>
+			  <version>${jawk.version}</version>			  
 			  <scope>provided</scope>
 			</dependency>
+			<dependency>
+			  <groupId>bcel</groupId>
+			  <artifactId>bcel</artifactId>
+			  <version>${bcel.version}</version>
+			  <scope>provided</scope>
+			</dependency>
+			
 
 			  
 			

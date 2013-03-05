@@ -24,8 +24,11 @@
  */
 package test.com.sun.script.jawk;
 
-import junit.framework.Assert;
+import javax.script.ScriptContext;
 
+import org.junit.Assert;
+
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -50,16 +53,39 @@ public class JawkScriptEngineTestCase extends BaseScriptingTestCase {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 		initEngine(JawkScriptEngine.class, "jawk");
+		engine.getContext().setAttribute(JawkScriptEngine.STDIN, input, ScriptContext.ENGINE_SCOPE);
+		engine.getContext().setAttribute(JawkScriptEngine.STDOUT, tee, ScriptContext.ENGINE_SCOPE);
+	}
+	
+	/**
+	 * Removes the ScriptContext attributes installed on setup
+	 */
+	@AfterClass
+	public static void tearDownAfterClass() {
+		engine.getContext().removeAttribute(JawkScriptEngine.STDIN, ScriptContext.ENGINE_SCOPE);
+		engine.getContext().removeAttribute(JawkScriptEngine.STDOUT, ScriptContext.ENGINE_SCOPE);
 	}
 	
 	/**
 	 * Basic eval test
-	 * @throws Exception thrown on any error
 	 */
 	@Test
-	public void basicEvaluation() throws Exception {
-		int i = (Integer)engine.eval("2*2");
-		Assert.assertEquals("Eval failed", 4, i);		
+	public void basicEvaluation() {
+		try {
+			input.append("A B C D\n");
+			//input.flushBuffer(true);
+			//engine.getContext().setAttribute(JawkScriptEngine.ARGUMENTS, new Object[]{input, tee, System.err}, ScriptContext.ENGINE_SCOPE);
+			engine.eval("BEGIN {print \"Hello\"; print $0; print \"Bye\"}" );
+			tee.flush();
+			log("Tee: [" + tee.toString() + "]");
+//			Integer a = (Integer)engine.get("a");
+//			Assert.assertNotNull("The 'a' variable", a);
+//			Assert.assertEquals("Value of a not the expected", 3, (int)a);		
+			log("Test complete");
+		} catch (Throwable t) {
+			loge(name.getMethodName() + " Test Failure", t);
+			throw new RuntimeException(t);
+		}
 	}
 	
 

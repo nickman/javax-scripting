@@ -115,6 +115,11 @@
 			  <groupId>org.jawk</groupId>
 			  <artifactId>jawk</artifactId>
 			</dependency>
+			<dependency>
+			  <groupId>bcel</groupId>
+			  <artifactId>bcel</artifactId>
+			</dependency>
+			
 		
 	</dependencies>
 </project>

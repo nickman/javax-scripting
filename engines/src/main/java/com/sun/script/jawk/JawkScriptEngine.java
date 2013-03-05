@@ -29,9 +29,30 @@
 
 package com.sun.script.jawk;
 
-import javax.script.*;
-import java.io.*;
-import org.jawk.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintStream;
+import java.io.Reader;
+import java.io.StringReader;
+import java.util.Arrays;
+import java.util.HashMap;
+
+import javax.script.AbstractScriptEngine;
+import javax.script.Bindings;
+import javax.script.ScriptContext;
+import javax.script.ScriptEngineFactory;
+import javax.script.ScriptException;
+import javax.script.SimpleBindings;
+
+import org.jawk.Awk;
+import org.jawk.backend.AVM;
+import org.jawk.ext.JawkExtension;
+import org.jawk.frontend.AwkParser;
+import org.jawk.frontend.AwkSyntaxTree;
+import org.jawk.intermediate.AwkTuples;
+import org.jawk.util.AwkParameters;
+import org.jawk.util.AwkSettings;
+import org.jawk.util.ScriptSource;
 
 /**
  * <p>Title: JawkScriptEngine</p>
@@ -77,7 +98,6 @@ public class JawkScriptEngine extends AbstractScriptEngine {
      * {@inheritDoc}
      * @see javax.script.ScriptEngine#eval(java.lang.String, javax.script.ScriptContext)
      */
-    @SuppressWarnings("resource")
 	@Override
 	public Object eval(String script, ScriptContext ctx) 
                        throws ScriptException {
@@ -87,24 +107,36 @@ public class JawkScriptEngine extends AbstractScriptEngine {
         PrintStream stderr;
 
         tmp = ctx.getAttribute(STDIN);
-        if (tmp instanceof InputStream) {
-            stdin = (InputStream) tmp;
+        if(tmp==null) {
+        	stdin = System.in;
         } else {
-            stdin = System.in;
+	        if (tmp instanceof InputStream) {
+	            stdin = (InputStream) tmp;
+	        } else {
+	            stdin = System.in;
+	        }
         }
 
         tmp = ctx.getAttribute(STDOUT);
-        if (tmp instanceof PrintStream) {
-            stdout = (PrintStream) tmp;
+        if(tmp==null) {
+        	stdout = System.out;
         } else {
-            stdout = System.out;
+	        if (tmp instanceof PrintStream) {
+	            stdout = (PrintStream) tmp;
+	        } else {
+	            stdout = System.out;
+	        }
         }
 
         tmp = ctx.getAttribute(STDERR);
-        if (tmp instanceof PrintStream) {
-            stderr = (PrintStream) tmp;
+        if(tmp==null) {
+        	stderr = System.err;
         } else {
-            stderr = System.err;
+	        if (tmp instanceof PrintStream) {
+	            stderr = (PrintStream) tmp;
+	        } else {
+	            stderr = System.err;
+	        }
         }
         
         String[] arguments;
@@ -137,7 +169,51 @@ public class JawkScriptEngine extends AbstractScriptEngine {
         System.arraycopy(arguments, 0, args, index + 1, arguments.length);
 
         try {
-            new Awk(args, stdin, stdout, stderr);
+            //new AwkScript(args, stdin, stdout, stderr);
+        	System.setIn(stdin);
+        	System.setOut(stdout);
+        	System.setErr(stderr);
+        	
+        	AwkParameters parameters = new AwkParameters(Awk.class, null);
+        	AwkSettings settings = parameters.parseCommandLineArguments(args);
+        	settings.setUseStdIn(true);
+        	//settings.setCompileRun(true);
+        	settings.setDumpIntermediateCode(true);
+        	settings.setDestinationDirectory("c:\\temp\\awk");
+        	settings.setDumpSyntaxTree(true);
+        	settings.setOutputFilename("c:\\temp\\awk\\out.txt");
+        	settings.setWriteIntermediateFile(true);
+        	
+        	
+        	AwkTuples tuples = new AwkTuples();
+			AwkParser parser = new AwkParser(false, false, false, new HashMap<java.lang.String,JawkExtension>());
+			AwkSyntaxTree ast = parser.parse(Arrays.asList(new ScriptSource("javax.script", new StringReader(script), false)));			
+			if (ast != null) {
+				// 1st pass to tie actual parameters to back-referenced formal parameters
+				ast.semanticAnalysis();
+				// 2nd pass to tie actual parameters to forward-referenced formal parameters
+				ast.semanticAnalysis();
+				// build tuples
+				int result = ast.populateTuples(tuples);
+				// ASSERTION: NOTHING should be left on the operand stack ...
+				assert result == 0;
+				// Assign queue.next to the next element in the queue.
+				// Calls touch(...) per Tuple so that addresses can be normalized/assigned/allocated
+				tuples.postProcess();
+				// record global_var -> offset mapping into the tuples
+				// so that the interpreter/compiler can assign variables
+				// on the "file list input" command line
+				parser.populateGlobalVariableNameToOffsetMappings(tuples);
+			}
+			AVM avm = new AVM(settings, new HashMap<java.lang.String,JawkExtension>());
+			int result = avm.interpret(tuples);
+			Object argv = avm.getARGV();
+			
+			
+			stdout.append("\nARGC:" + avm.getARGC());
+			//avm.setFILENAME(filename)
+			avm.waitForIO();
+			stdout.append("\nResult:" + result);
             return stdout;
         } catch (Exception e) {
             throw new ScriptException(e);
