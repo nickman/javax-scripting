@@ -1,2 +1,3 @@
 com.sun.script.java.JavaScriptEngineFactory
 bsh.engine.BshScriptEngineFactory
+com.sun.script.jawk.JawkScriptEngineFactory
