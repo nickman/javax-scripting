@@ -34,20 +34,13 @@ DAMAGE.
 */
 package test.bsh.engine;
 
-import static org.junit.Assert.fail;
-
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-
 import junit.framework.Assert;
 
-import org.junit.Before;
 import org.junit.BeforeClass;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.TestName;
 
-import bsh.engine.BshScriptEngineFactory;
+import test.scripting.BaseScriptingTestCase;
+import bsh.engine.BshScriptEngine;
 
 /**
  * <p>Title: BshScriptEngineTestCase</p>
@@ -57,34 +50,15 @@ import bsh.engine.BshScriptEngineFactory;
  * <p><code>test.bsh.engine.BshScriptEngineTestCase</code></p>
  */
 
-public class BshScriptEngineTestCase {
-	/** Static script engine manager instance */
-	protected static ScriptEngineManager manager = null;
-	/** Static script engine instance */
-	protected static ScriptEngine engine = null;
-	
+public class BshScriptEngineTestCase extends BaseScriptingTestCase {
 	/**
 	 * Loads the BeanShell ScriptEngineManager
 	 * @throws java.lang.Exception thrown on any error
 	 */
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		manager = new ScriptEngineManager(BshScriptEngineFactory.class.getClassLoader());
-		engine = manager.getEngineByName( "beanshell" );
-		Assert.assertNotNull("The script engine was null", engine);
-		
+		initEngine(BshScriptEngine.class, "beanshell");
 	}
-	/** The currently executing test name */
-	@Rule public final TestName name = new TestName();
-
-	/**
-	 * Prints a banner with the test name
-	 */
-	@Before
-	public void setUp() {
-		System.out.println("\n\t==============\n\tBeanShell Engine\n\tExecuting test [" + name.getMethodName() + "]\n\t==============");
-	}
-
 
 	/**
 	 * Basic eval test
